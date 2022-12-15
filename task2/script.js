@@ -49,7 +49,7 @@ const menuItems = [{
 }
 ];
 
-const template = function menuItemTemplateSet(menuItem) {
+const getMenuItem = (menuItem) => {
    return ` 
    <div class="menu-item">
       <img src="${menuItem.photo}" class="menu-item-img">
@@ -62,13 +62,13 @@ const template = function menuItemTemplateSet(menuItem) {
 };
 
 function filterMenu(foodType) {
-   return filterResult = menuItems.filter(menuItem => menuItem.catagory.includes(foodType))
+   return menuItems.filter(menuItem => menuItem.catagory.includes(foodType))
 };
 
 function showMenu(menuItems) {
    menu.innerHTML = ""
-   menuItems.forEach(function menuItemTemplateSet(menuItem) {
-      menu.innerHTML += template(menuItem)
+   menuItems.forEach(function (menuItem) {
+      menu.innerHTML += getMenuItem(menuItem)
    })
 };
 
