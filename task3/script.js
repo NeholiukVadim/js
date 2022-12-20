@@ -5,6 +5,7 @@ const filterButtonDinners = document.querySelector(".dinner-button");
 const filterButtonDrinks = document.querySelector(".drinks-button");
 const filterButtonDeserts = document.querySelector(".deserts-button");
 const sortButton = document.querySelector(".sort-button");
+const menuSortedResult = document.querySelector(".menu-sort-result");
 
 const menuItems = [{
    photo: "images/pancakes.jpg",
@@ -97,6 +98,10 @@ const getMenuItem = (menuItem) => {
 `
 };
 
+const getSortedMenuItem = (sortedMenuItem) => {
+   return `<div class="sorted-menu-item">${sortedMenuItem}</div>`
+};
+
 let currentMenu = menuItems;
 
 function filterMenu(foodType) {
@@ -113,6 +118,21 @@ function sortMenu(currentMenu) {
    });
 };
 
+function sortedResult(currentMenu) {
+   //const sortedArray = sortMenu(currentMenu)
+   sortedMenuResult = currentMenu.map(function (items) {
+      return items["title"]
+   });
+   return sortedMenuResult;
+}
+
+function showSortedMenu(sortedMenuResult) {
+   menuSortedResult.innerHTML = ""
+   sortedMenuResult.forEach(function (sortedMenuItem) {
+      menuSortedResult.innerHTML += getSortedMenuItem(sortedMenuItem)
+   })
+};
+
 function showMenu(menuItems) {
    menu.innerHTML = ""
    menuItems.forEach(function (menuItem) {
@@ -120,28 +140,48 @@ function showMenu(menuItems) {
    })
 };
 
-filterButtonAll.addEventListener("click", () => showMenu(menuItems));
+filterButtonAll.addEventListener("click", () => {
+   currentMenu = menuItems;
+   showMenu(currentMenu);
+   sortedResult(currentMenu);
+   showSortedMenu(sortedMenuResult);
+});
 
 filterButtonSalads.addEventListener("click", () => {
    currentMenu = filterMenu("salad");
    showMenu(currentMenu);
+   sortedResult(currentMenu);
+   showSortedMenu(sortedMenuResult);
 });
 
 filterButtonDinners.addEventListener("click", () => {
    currentMenu = filterMenu("dinner");
    showMenu(currentMenu);
+   sortedResult(currentMenu);
+   showSortedMenu(sortedMenuResult);
 });
 
 filterButtonDrinks.addEventListener("click", () => {
    currentMenu = filterMenu("drink");
    showMenu(currentMenu);
+   sortedResult(currentMenu);
+   showSortedMenu(sortedMenuResult);
 });
 
 filterButtonDeserts.addEventListener("click", () => {
    currentMenu = filterMenu("desert");
    showMenu(currentMenu);
+   sortedResult(currentMenu);
+   showSortedMenu(sortedMenuResult);
 });
 
-sortButton.addEventListener("click", () => showMenu(sortMenu(currentMenu)));
+sortButton.addEventListener("click", () => {
+   showMenu(sortMenu(currentMenu))
+   currentMenu = sortMenu(currentMenu)
+   sortedResult(currentMenu);
+   showSortedMenu(sortedMenuResult);
+});
 
 showMenu(menuItems);
+sortedResult(currentMenu);
+showSortedMenu(sortedMenuResult);
