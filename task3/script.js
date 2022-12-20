@@ -119,16 +119,12 @@ function sortMenu(currentMenu) {
 };
 
 function sortedResult(currentMenu) {
-   //const sortedArray = sortMenu(currentMenu)
-   sortedMenuResult = currentMenu.map(function (items) {
-      return items["title"]
-   });
-   return sortedMenuResult;
+   return currentMenu.map((item) => item?.title || item);
 }
 
-function showSortedMenu(sortedMenuResult) {
+function showSortedMenu(currentMenu) {
    menuSortedResult.innerHTML = ""
-   sortedMenuResult.forEach(function (sortedMenuItem) {
+   sortedResult(currentMenu).forEach(function (sortedMenuItem) {
       menuSortedResult.innerHTML += getSortedMenuItem(sortedMenuItem)
    })
 };
@@ -144,44 +140,44 @@ filterButtonAll.addEventListener("click", () => {
    currentMenu = menuItems;
    showMenu(currentMenu);
    sortedResult(currentMenu);
-   showSortedMenu(sortedMenuResult);
+   showSortedMenu(sortedResult(currentMenu));
 });
 
 filterButtonSalads.addEventListener("click", () => {
    currentMenu = filterMenu("salad");
    showMenu(currentMenu);
    sortedResult(currentMenu);
-   showSortedMenu(sortedMenuResult);
+   showSortedMenu(sortedResult(currentMenu));
 });
 
 filterButtonDinners.addEventListener("click", () => {
    currentMenu = filterMenu("dinner");
    showMenu(currentMenu);
    sortedResult(currentMenu);
-   showSortedMenu(sortedMenuResult);
+   showSortedMenu(sortedResult(currentMenu));
 });
 
 filterButtonDrinks.addEventListener("click", () => {
    currentMenu = filterMenu("drink");
    showMenu(currentMenu);
    sortedResult(currentMenu);
-   showSortedMenu(sortedMenuResult);
+   showSortedMenu(sortedResult(currentMenu));
 });
 
 filterButtonDeserts.addEventListener("click", () => {
    currentMenu = filterMenu("desert");
    showMenu(currentMenu);
    sortedResult(currentMenu);
-   showSortedMenu(sortedMenuResult);
+   showSortedMenu(sortedResult(currentMenu));
 });
 
 sortButton.addEventListener("click", () => {
    showMenu(sortMenu(currentMenu))
    currentMenu = sortMenu(currentMenu)
    sortedResult(currentMenu);
-   showSortedMenu(sortedMenuResult);
+   showSortedMenu(sortedResult(currentMenu));
 });
 
 showMenu(menuItems);
 sortedResult(currentMenu);
-showSortedMenu(sortedMenuResult);
+showSortedMenu(sortedResult(currentMenu));
