@@ -15,7 +15,7 @@ getFormData = (selector) => Object.fromEntries(new FormData(document.querySelect
 
 function showError(inputElement, inputAlert, text) {
    inputElement.style.borderColor = "red";
-   inputAlert.textContent += text;
+   inputAlert.textContent = text;
    inputAlert.style.display = "block";
    return false;
 }
@@ -54,8 +54,9 @@ class form {
    }
 
    validatePasswordConfirm() {
+      const isNotShort = this.password.length > 6;
       const samePassword = this.password === this.passwordConfirm;
-      return samePassword ? hideError(passwordConfirmEntryField, passwordConfirmAlert) : showError(passwordConfirmEntryField, passwordConfirmAlert, "password don`t match");
+      return isNotShort && samePassword ? hideError(passwordConfirmEntryField, passwordConfirmAlert) : showError(passwordConfirmEntryField, passwordConfirmAlert, "password don`t match");
    }
 }
 
