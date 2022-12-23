@@ -1,0 +1,103 @@
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+   <title> task-2.4 </title>
+   <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+   <div class="background">
+      <div class="registration-form">
+         <div class="form-article">
+            <h1> Create Account </h1>
+         </div>
+         <form action="#" method="post" class="forms" id="forms" enctype="multipart/form-data">
+            <div class="form-content">
+               <div class="first-name">
+                  <p>First name *</p>
+                  <input type="text" name="first-name" value="" placeholder="enter your first name"
+                     class="text first-name" id="first-name" />
+                  <p class="first-name-alert alert"></p>
+               </div>
+               <div class="last-name">
+                  <p>Last name</p>
+                  <input type="text" name="last-name" value="" placeholder="enter your last name"
+                     class="text last-name" />
+               </div>
+               <div class="email">
+                  <p>Email *</p>
+                  <input type="text" name="email" value="" placeholder="enter email" class="text email" id="email" />
+                  <p class="email-alert alert"></p>
+               </div>
+               <div class="password">
+                  <p>Password *</p>
+                  <input type="password" name="password" value="" placeholder="enter your password"
+                     class="password-input" id="password" />
+                  <p class="password-alert alert"></p>
+               </div>
+               <div class="password-confirm">
+                  <p>Confirm Password *</p>
+                  <input type="password" name="password-confirm" value="" placeholder="enter your password again"
+                     class="password-input" id="password-confirm" />
+                  <p class="password-confirm-alert alert"></p>
+               </div>
+               <div class="gender">
+                  <p>Gender</p>
+                  <input type="radio" id="gender-male" name="gender-choose" value="male" class="radio male" /><label
+                     for="gender-male">
+                     male </label>
+                  <input type="radio" id="gender-female" name="gender-choose" value="female"
+                     class="radio female" /><label for="gender-female">
+                     female </label>
+               </div>
+               <div class="hobbies">
+                  <p>Hobbies</p>
+                  <div class="checkbox-conteiner">
+                     <input type="checkbox" id="sports" name="hobby-sports" value="sports"
+                        class="checkbox sports" /><label for="sports">sports</label>
+                     <input type="checkbox" id="music" name="hobby-music" value="music" class="checkbox music" /><label
+                        for="music">music</label>
+                     <input type="checkbox" id="travel" name="hobby-travel" value="travel"
+                        class="checkbox travel" /><label for="travel">travel</label>
+                     <input type="checkbox" id="movies" name="hobby-movies" value="movies"
+                        class="checkbox movies" /><label for="movies">movies</label>
+                  </div>
+               </div>
+               <div class="source-of-income">
+                  <p>Source of Income</p>
+                  <select name="source-of-income" class="selection">
+                     <option value="Employed">Employed</option>
+                     <option value="Unemployed">Unemployed</option>
+                  </select>
+               </div>
+               <div class="income">
+                  <p>Income</p>
+                  <div class="slider-box">
+                     <input type="range" min="0" max="1000" class="range-slider" />
+                     <div class="number-box"><span class="range-number">200</span>K</div>
+                  </div>
+               </div>
+               <div class="profile-picture-upload">
+                  <p>Upload Profile Picture</p>
+                  <input type="file" name="profile-picture" class="file profile-picture" />
+               </div>
+               <div class="age">
+                  <p>Age</p>
+                  <input type="text" name="age" value="18" class="text age" />
+               </div>
+               <div class="bio">
+                  <p>Bio</p>
+                  <textarea name="bio" class="text bio"></textarea>
+               </div>
+            </div>
+            <div class="button-space">
+               <button type="submit" class="submit-button">Create</button>
+            </div>
+         </form>
+      </div>
+   </div>
+   <script type="text/javascript" src="script.js"></script>
+</body>
