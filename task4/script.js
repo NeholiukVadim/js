@@ -13,8 +13,9 @@ const passwordConfirmEntryField = document.querySelector("#password-confirm");
 
 getFormData = (selector) => Object.fromEntries(new FormData(document.querySelector(selector)))
 
-function showError(inputElement, inputAlert) {
+function showError(inputElement, inputAlert, text) {
    inputElement.style.borderColor = "red";
+   inputAlert.textContent += text;
    inputAlert.style.display = "block";
    return false;
 }
@@ -36,25 +37,25 @@ class form {
    validateFirstName() {
       const isNotShort = this.firstName.length < 3;
       const hasNoSpaces = !(/^\S{3,}$/.test(this.firstName)); //error if has spaces
-      const validResult = isNotShort || hasNoSpaces ? showError(firstNameEntryField, firstNameAlert) : hideError(firstNameEntryField, firstNameAlert);
+      const validResult = isNotShort || hasNoSpaces ? showError(firstNameEntryField, firstNameAlert, "name can`t have spaces and must be min. 3 letters long.") : hideError(firstNameEntryField, firstNameAlert);
       return validResult;
    }
 
    validateEmail() {
       const isEmail = this.email.match(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
       //error if has spaces, don`t have @, don`t have letters before @, after @ must be min 1 letter and min 2 letters after .
-      return isEmail ? hideError(emailEntryField, emailAlert) : showError(emailEntryField, emailAlert);
+      return isEmail ? hideError(emailEntryField, emailAlert) : showError(emailEntryField, emailAlert, "this is not email");
    }
 
    validatePassword() {
       const isNotShort = this.password.length < 6;
       const hasNoSpaces = !(/^\S{3,}$/.test(this.password)); //error if has spaces
-      return isNotShort || hasNoSpaces ? showError(passwordEntryField, passwordAlert) : hideError(passwordEntryField, passwordAlert);
+      return isNotShort || hasNoSpaces ? showError(passwordEntryField, passwordAlert, "password can`t have spaces and must be min. 6 letters long.") : hideError(passwordEntryField, passwordAlert);
    }
 
    validatePasswordConfirm() {
       const samePassword = this.password === this.passwordConfirm;
-      return samePassword ? hideError(passwordConfirmEntryField, passwordConfirmAlert) : showError(passwordConfirmEntryField, passwordConfirmAlert);
+      return samePassword ? hideError(passwordConfirmEntryField, passwordConfirmAlert) : showError(passwordConfirmEntryField, passwordConfirmAlert, "password don`t match");
    }
 }
 
