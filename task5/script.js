@@ -39,12 +39,10 @@ const showFollowDayWeather = (filteredItemData) => {
 
 function fetchWeatherData(country) {
    fetch(`http://api.openweathermap.org/data/2.5/forecast?q=${country}&units=metric&appid=a1717982c4b820f213e33192282d24a1`)
-      .then((response) => {
-         return response.json();
-      })
+      .then((response) => response.json())
+
       .then((data, filteredData) => {
          filteredData = data.list.filter((_, i) => i % 8 - 7 == 0);
-         console.log(filteredData, data);
          let showWeather = (filteredData, data) => {
             weatherConteiner.innerHTML = "";
             weatherConteiner.innerHTML += showTodayWeather(data, filteredData, 0);
@@ -60,7 +58,6 @@ fetchWeatherData('Kiev')
 
 countryEntryField.addEventListener("change", (event) => {
    changedCountryEntryFieldValue = event.target.value;
-   showCurrentSearch.textContent = "selected: " + changedCountryEntryFieldValue;
-   console.log(changedCountryEntryFieldValue);
+   showCurrentSearch.textContent = `selected: ${changedCountryEntryFieldValue}`;
    fetchWeatherData(changedCountryEntryFieldValue);
 });
