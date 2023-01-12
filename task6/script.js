@@ -5,19 +5,19 @@ const listClearButton = document.querySelector(".clear-button");
 
 let storedArray = [];
 let listData = storedArray;
-let listItemId = -1;
+let listItemId = 0;
 inputValue.value = '';
 
-const localStorageDataWrite = () => {
+const writeLocalStorageData = () => {
    localStorage.setItem("storedArrayData", JSON.stringify(listData))
 };
 
-const idChange = () => {
+const changeId = () => {
    listItemId = listItemId + 1;
    return listItemId;
 };
 
-const arrayElementAdd = () => {
+const addArrayElement = () => {
    listData.push(inputValue.value)
 };
 
@@ -45,11 +45,11 @@ const deleteItem = (item) => {
    listItemId = listItemId - 1;
 }
 
-const listShow = () => {
-   taskConteiner.insertAdjacentElement('beforeend', taskRender(listItemId));
+const showList = () => {
+   taskConteiner.insertAdjacentElement('beforeend', renderTask(listItemId));
 };
 
-const taskRender = (listItemId) => {
+const renderTask = (listItemId) => {
    const template = document.createElement('div');
    template.innerHTML = `
    <div class="task-item">
@@ -58,17 +58,17 @@ const taskRender = (listItemId) => {
       <button class="trashbin"><img class="trashbin-button" src="icons/delete.png" title="delete"></button>
    </div>
    `
-   template.querySelector('.checkmark')?.addEventListener('click', () => {
+   template.querySelector('.checkmark').addEventListener('click', () => {
       editItem(template);
    });
-   template.querySelector('.trashbin')?.addEventListener('click', () => {
+   template.querySelector('.trashbin').addEventListener('click', () => {
       deleteItem(template);
-      localStorageDataWrite();
+      writeLocalStorageData();
    });
    return template
 };
 
-const localStorageDataGet = () => {
+const getLocalStorageData = () => {
    storedArray = JSON.parse(localStorage.getItem("storedArrayData"));
    if (storedArray === null) {
       storedArray = [];
@@ -77,30 +77,33 @@ const localStorageDataGet = () => {
    else {
       listData = storedArray;
       listData.forEach(listItem => {
-         taskConteiner.insertAdjacentElement('beforeend', taskRender(listData.indexOf(listItem)));
+         taskConteiner.insertAdjacentElement('beforeend', renderTask(listData.indexOf(listItem)));
       });
-      listItemId = storedArray.length - 1;
+      listItemId = storedArray.length;
    }
 };
 
-localStorageDataGet()
+getLocalStorageData()
 
 addButton.addEventListener("click", () => {
    if (addButton.textContent === "Add") {
-      idChange();
-      arrayElementAdd();
-      listShow();
-      localStorageDataWrite();
+      addArrayElement();
+      showList();
+      writeLocalStorageData();
+      changeId();
+      inputValue.value = "";
    }
    else if (addButton.textContent === "Edit") {
       editTask();
       editArray();
-      localStorageDataWrite();
+      writeLocalStorageData();
+      inputValue.value = "";
    }
 });
 
 listClearButton.addEventListener("click", () => {
-   listItemId = -1;
+   listItemId = 0;
+   listData = [];
    taskConteiner.innerHTML = "";
    inputValue.value = "";
    localStorage.clear();
