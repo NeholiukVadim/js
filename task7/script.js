@@ -6,6 +6,17 @@ const filteringFailAlert = document.querySelector(".filter-fail-alert-block")
 const preloader = document.querySelector(".preloader-layer")
 
 let fetchedData = "";
+let countryDataList = [];
+
+const fetchCountryData = async () => {
+   const response = await fetch('https://restcountries.com/v3.1/all')
+   fetchedData = await response.json();
+   countryDataList = fetchedData.slice(0, 20);
+   loadCountryData = await renderCountryData(countryDataList);
+   hidePreloaderScreen = await hidePreloader()
+};
+
+fetchCountryData();
 
 const renderTemplate = (data) => {
    return `
@@ -30,28 +41,36 @@ const renderCountryData = (dataArray) => {
    })
 };
 
-const filterByRegion = () => {
-   filteredCountryRegionData = countryDataList.filter((countryDataList) => {
-      return countryDataList.region == regionSelect.value;
+const filterData = () => {
+   filteredCountryData = countryDataList.filter((countryDataList) => {
+      if (regionSelect.value == "All") {
+         return countryDataList.name.common.toString().toLowerCase().includes(searchInputResult);
+      }
+      else if (searchInput.value === "") {
+         return countryDataList.region == regionSelect.value;
+      }
+      else {
+         return countryDataList.region == regionSelect.value && countryDataList.name.common.toString().toLowerCase().includes(searchInputResult);
+      }
    });
 }
 
-const getRegionFilteredArray = () => {
-   if (regionSelect.value == "All") {
-      renderCountryData(countryDataList);
+const getFilteredArray = () => {
+   if (regionSelect.value == "All" && searchInput.value === "") {
+      filteredCountryData = countryDataList;
+      renderCountryData(filteredCountryData)
    }
    else {
-      filterByRegion()
-      countryDataList = filteredCountryRegionData;
-      renderCountryData(countryDataList);
-   };
+      filterData()
+      if (filteredCountryData.length === 0) {
+         showAlert()
+      }
+      else {
+         renderCountryData(filteredCountryData)
+         filteringFailAlert.style.display = "none";
+      }
+   }
 };
-
-const filterByName = () => {
-   filteredCountryNameData = countryDataList.filter((countryDataList) => {
-      return countryDataList.name.common.toString().toLowerCase().includes(searchInputResult);
-   });
-}
 
 const showAlert = () => {
    countriesConteiner.innerHTML = ""
@@ -59,33 +78,9 @@ const showAlert = () => {
    filteringFailAlert.style.display = "block";
 }
 
-const getNameFilteredArray = () => {
-   if (searchInput.value === "") {
-      getRegionFilteredArray()
-   }
-   else {
-      filterByName()
-      if (filteredCountryNameData.length == 0) {
-         showAlert()
-      }
-      else {
-         renderCountryData(filteredCountryNameData);
-         filteringFailAlert.style.display = "none";
-      }
-   }
-};
-
 const hidePreloader = () => {
    preloader.style.display = "none"
 }
-
-const fetchCountryData = async () => {
-   const response = await fetch('https://restcountries.com/v3.1/all')
-   fetchedData = await response.json();
-   countryDataList = fetchedData.slice(0, 20);
-   loadCountryData = await renderCountryData(countryDataList);
-   hidePreloaderScreen = await hidePreloader()
-};
 
 const changeCountryBlockStyle = () => {
    if (lightModeSwitcher.textContent == "Dark mode") {
@@ -100,17 +95,27 @@ const changeCountryBlockStyle = () => {
    }
 }
 
-regionSelect.addEventListener("change", () => {
-   filteringFailAlert.style.display = "none";
-   countryDataList = fetchedData.slice(0, 20);
-   getRegionFilteredArray();
-   changeCountryBlockStyle();
-});
+const debounce = (fn, ms) => {
+   let timeout;
+   return function () {
+      const fnCall = () => { fn.apply(this, arguments) }
+      clearTimeout(timeout);
+      timeout = setTimeout(fnCall, ms)
+   };
+}
+
+const filterDebounce = debounce(getFilteredArray, 200)
 
 searchInput.addEventListener("input", () => {
    filteringFailAlert.style.display = "none";
    searchInputResult = searchInput.value.toString().toLowerCase();
-   getNameFilteredArray();
+   filterDebounce(getFilteredArray)
+   changeCountryBlockStyle();
+});
+
+regionSelect.addEventListener("change", () => {
+   filteringFailAlert.style.display = "none";
+   getFilteredArray();
    changeCountryBlockStyle();
 });
 
@@ -118,27 +123,13 @@ lightModeSwitcher.addEventListener("click", () => {
    if (lightModeSwitcher.textContent == "Light mode") {
       lightModeSwitcher.style.color = "black"
       lightModeSwitcher.innerHTML = "Dark mode"
-      document.querySelector(".search").style.background = "white";
-      document.querySelector(".region-list").style.background = "white";
-      document.querySelector(".header").style.background = "white";
-      document.querySelector(".header-article").style.color = "black";
-      document.querySelector(".region-list").style.color = "black";
-      document.querySelector(".search").style.color = "black";
-      document.querySelector(".background").style.background = "#f1f1f1"
-      changeCountryBlockStyle()
+      document.querySelector(".background").classList.remove('dark');
+      document.querySelector(".background").classList.add('light');
    }
    else if (lightModeSwitcher.textContent == "Dark mode") {
       lightModeSwitcher.style.color = "white"
       lightModeSwitcher.innerHTML = "Light mode"
-      document.querySelector(".search").style.background = "#5f6063";
-      document.querySelector(".region-list").style.background = "#5f6063";
-      document.querySelector(".header").style.background = "#5f6063";
-      document.querySelector(".header-article").style.color = "white";
-      document.querySelector(".region-list").style.color = "white";
-      document.querySelector(".search").style.color = "white";
-      document.querySelector(".background").style.background = "#242530"
-      changeCountryBlockStyle()
+      document.querySelector(".background").classList.remove('light');
+      document.querySelector(".background").classList.add('dark');
    }
 });
-
-fetchCountryData();
