@@ -3,14 +3,15 @@ const weatherConteiner = document.querySelector(".weather-conteiner");
 const countryEntryField = document.querySelector("#location-form");
 const showCurrentSearch = document.querySelector(".search-show");
 
-const showTodayWeather = (itemData, filteredItemData, n) => {
+const showTodayWeather = (cityInfo, filteredItemData, n) => {
+   console.log(cityInfo, filteredItemData)
    return `
    <div class="current-day-weather-block">
       <div class="temperature-segment">
          <h2 class="real-temperature">${Math.round(filteredItemData[n].main.temp) + '&degC'}<br><span class="feels-like-temperature">${"Feels like " + Math.round([filteredItemData[n].main.feels_like]) + '&degC'}</span></h2>
       </div>
       <div class="location-segment">
-         <h2 class="current-day-sky">${filteredItemData[n].weather[n].description}<br>${itemData.city.name + ", " + itemData.city.country}</h2>
+         <h2 class="current-day-sky">${filteredItemData[n].weather[n].description}<br>${cityInfo.name + ", " + cityInfo.country}</h2>
       </div>
       <div class="image-segment">
       <img src="http://openweathermap.org/img/wn/${filteredItemData[n].weather[n]['icon']}@2x.png" class="current-day-image">
@@ -36,25 +37,28 @@ const showFollowDayWeather = (filteredItemData) => {
    `
 };
 
+let weatherData = ''
 
-function fetchWeatherData(country) {
-   fetch(`http://api.openweathermap.org/data/2.5/forecast?q=${country}&units=metric&appid=a1717982c4b820f213e33192282d24a1`)
-      .then((response) => response.json())
+const renderWeater = (weatherData) => {
+   console.log(weatherData)
+   filteredData = weatherData.list.filter((_, i) => i % 8 - 7 == 0);
 
-      .then((data, filteredData) => {
-         filteredData = data.list.filter((_, i) => i % 8 - 7 == 0);
-         let showWeather = (filteredData, data) => {
-            weatherConteiner.innerHTML = "";
-            weatherConteiner.innerHTML += showTodayWeather(data, filteredData, 0);
-            filteredData.forEach(function (filteredData) {
-               weatherConteiner.innerHTML += showFollowDayWeather(filteredData);
-            })
-         };
-         showWeather(filteredData, data);
-      });
+   weatherConteiner.innerHTML = "";
+   weatherConteiner.innerHTML += showTodayWeather(weatherData.city, filteredData, 0);
+
+   filteredData.forEach(weatheItem => {
+      weatherConteiner.innerHTML += showFollowDayWeather(weatheItem);
+   })
 }
 
-fetchWeatherData('Kiev')
+const fetchWeatherData = async (country) => {
+   const response = await fetch(`http://api.openweathermap.org/data/2.5/forecast?q=${country}&units=metric&appid=a1717982c4b820f213e33192282d24a1`)
+   weatherData = await response.json();
+   renderWeater(weatherData);
+}
+
+fetchWeatherData('Kiev');
+
 
 countryEntryField.addEventListener("change", (event) => {
    changedCountryEntryFieldValue = event.target.value;

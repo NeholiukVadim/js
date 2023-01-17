@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+   <title> task-2.7 </title>
+   <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+   <div class="background">
+      <div class="header">
+         <p class="header-article"> Where in the world? </p>
+         <p class="light-mode">Light mode</p>
+      </div>
+      <div class="content-block">
+         <form class="filter-conteiner" name="country">
+            <input type="text" id="search" name="search" placeholder="search for a country" class="search">
+            <select name="country" placeholder="Filter by region" class="region-list">
+               <option value="All" selected="selected"> All </option>
+               <option value="Europe"> Europe </option>
+               <option value="Asia"> Asia </option>
+               <option value="Africa"> Africa </option>
+               <option value="Americas"> Americas </option>
+               <option value="Oceania"> Oceania </option>
+            </select>
+         </form>
+         <div class="country-list"></div>
+         <p class="filter-fail-alert-block"></p>
+      </div>
+   </div>
+   <div class="preloader-layer">
+      <div class="preloader"></div>
+   </div>
+   <script type="text/javascript" src="script.js"></script>
+</body>
