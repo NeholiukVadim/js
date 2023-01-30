@@ -2,7 +2,7 @@ export const shopItemsTemplate = (data) => {
    return `
    <div class="catalog-item">
       <div class="catalog-image-conteiner">
-         <img src="${data.photo}" class="product-image">
+         <img src="${"../photos/" + data.photo}" class="product-image">
       </div>
       <p class="product-name">${data.title}</p>
       <p class="product-price">$${data.price}</p>
@@ -14,7 +14,7 @@ export const shopItemsTemplate = (data) => {
 export const cartItemsTemplate = (data) => {
    return `<div class="sidebar-item">
                <div class="sidebar-image-conteiner">
-                  <img src="${data.photo}" class="sidebar-product-image">
+                  <img src="${"../photos/" + data.photo}" class="sidebar-product-image">
                </div>
                <div class="sidebar-item-text">
                   <p class="sidebar-product-name">${data.title}</p>

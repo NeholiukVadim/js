@@ -69,10 +69,18 @@ const updateCartData = () => {
       showCartItemCount()
    }));
    document.querySelectorAll(".sidebar-item").forEach(conteiner => conteiner.querySelector(".arrow-down").addEventListener('click', () => {
-      decreaseItemQuantity(conteiner)
-      changeSidebarItemValues(conteiner)
-      showCheckSum()
-      showCartItemCount()
+      window.modifiedItem = localStorageList.map(array => array.title).indexOf(conteiner.querySelector(".sidebar-product-name").textContent);
+      if (localStorageList[modifiedItem].quantity > 1) {
+         decreaseItemQuantity()
+         changeSidebarItemValues(conteiner)
+         showCheckSum()
+         showCartItemCount()
+      }
+      else {
+         removeSidebarItem(conteiner)
+         showCheckSum()
+         showCartItemCount()
+      }
    }));
    showCheckSum()
 }
@@ -94,15 +102,9 @@ const increaseItemQuantity = (element) => {
    localStorage.setItem("localStorageData", JSON.stringify(localStorageList))
 }
 
-const decreaseItemQuantity = (element) => {
-   window.modifiedItem = localStorageList.map(array => array.title).indexOf(element.querySelector(".sidebar-product-name").textContent);
-   if (localStorageList[modifiedItem].quantity > 1) {
-      window.localStorageList[modifiedItem].quantity = Number(localStorageList[modifiedItem].quantity) - 1
-      localStorage.setItem("localStorageData", JSON.stringify(localStorageList))
-   }
-   else {
-      return
-   }
+const decreaseItemQuantity = () => {
+   window.localStorageList[modifiedItem].quantity = Number(localStorageList[modifiedItem].quantity) - 1
+   localStorage.setItem("localStorageData", JSON.stringify(localStorageList))
 }
 
 const changeSidebarItemValues = (element) => {
