@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+   <title> Products page </title>
+   <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+   <div class="background">
+      <div class="header">
+         <a href="../html/main.html" class="nav">Home</a>
+         <a href="../html/products.html" class="active-page nav">Products</a>
+         <a href="../html/about.html" class="nav">About</a>
+         <p class="logo">comfy</p>
+         <div class="shopcart-conteiner">
+            <img src="../photos/shopping-cart.png" class="shopcart">
+            <div class="item-count"></div>
+         </div>
+      </div>
+      <div class="path-conteiner">
+         <div class="path-content">
+            <h2 class="path">Home / Products</h2>
+         </div>
+      </div>
+      <div class="page-content">
+         <div class="filter-conteiner">
+            <input type="text" class="input-filter" placeholder="Search...">
+            <ul class="list-article">Company
+               <li class="list-company">All</li>
+               <li class="list-company">Ikea</li>
+               <li class="list-company">Marcos</li>
+               <li class="list-company">Caressa</li>
+               <li class="list-company">Liddy</li>
+            </ul>
+            <p class="range-article">Price</p>
+            <input type="range" min="0" max="100" class="range-filter">
+            <p class="cost-text">Value: <span class="cost-value"></span></p>
+         </div>
+         <div class="products-catalog"></div>
+         <p class="filter-alert"></p>
+      </div>
+   </div>
+   <div class="sidebar-conteiner">
+      <div class="sidebar">
+         <div class="sidebar-article-conteiner">
+            <div class="close-button"></div>
+            <p class="sidebar-article">Your bag</p>
+         </div>
+         <div class="sidebar-item-conteiner">
+         </div>
+         <div class="check-conteiner">
+            <p class="total-check-text"></p>
+            <button class="checkout-button">Remove All</button>
+         </div>
+      </div>
+   </div>
+   <script type="module" src="../js/products.js"></script>
+</body>
